@@ -103,12 +103,10 @@ binaryTree* delete_node(binaryTree* root, int value){
 binaryTree* search(binaryTree* node, int value)
 {
     if (node == NULL){
-        printf("No");
         return node;
     }
 
     else if (node->value == value){
-        printf("Yes");
         return node;
     }
 

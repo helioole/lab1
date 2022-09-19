@@ -59,8 +59,10 @@ int main(){
                     printf("Enter a node: ");
                     scanf("%d", &value);
                     printf("Is it in the tree? \n");
-                    search(root, value);
-                    printf("\n");
+                    if(search(root, value)){
+                        printf("Yes\n");
+                    }
+                    else printf("No\n");
                     }
                 break;
             }
