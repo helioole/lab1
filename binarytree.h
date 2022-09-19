@@ -26,6 +26,11 @@ void preorder(binaryTree* node);
 void posorder(binaryTree* node);
 void serialize(binaryTree* node, char name[]);
 void deserialize(binaryTree** node, char name[]);
+void storeInorder(binaryTree* node, int inorder[], int* index_ptr);
+int countNodes(binaryTree* root);
+int compare(const void* a, const void* b);
+void binaryTreeToBST(binaryTree* root);
+
 
 binaryTree* minValue(binaryTree* node){
 binaryTree* current = node;
@@ -261,9 +266,11 @@ void binaryTreeToBST(binaryTree* root)
  
     // delete dynamically allocated memory to avoid memory leak
     free(arr);
+
+    //inorder traversal 
     if(root){
        inorder(root->left);
-        printf("%d ", root->value);
-        inorder(root->right);
+       printf("%d ", root->value);
+       inorder(root->right);
     }
 }
