@@ -1,3 +1,9 @@
+#ifndef binarytree_h
+#define binarytree_h
+
+
+#endif /* binarytree_h */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -62,7 +68,7 @@ int main(){
                     if(search(root, value)){
                         printf("Yes\n");
                     }
-                    else printf("No\n");
+                    else {printf("No\n");}
                     }
                 break;
             }
@@ -98,6 +104,18 @@ int main(){
                 else {
                     printf("Post-order traversal: ");
                     postorder(root);
+                    printf("\n");
+                    }
+                break;
+            }
+
+            case '7':{
+                if(root == NULL){
+                    printf("There are no nodes yet\n");
+                }
+                else {
+                    printf("BST: ");
+                    binaryTreeToBST(root);
                     printf("\n");
                     }
                 break;

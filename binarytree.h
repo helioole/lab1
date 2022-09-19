@@ -1,3 +1,9 @@
+#ifndef binarytree_h
+#define binarytree_h
+
+
+#endif /* binarytree_h */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -180,4 +186,84 @@ void deserialize(binaryTree** node, char name[]){
         insert(*node, value);
     }
     fclose(file);
+}
+
+void storeInorder(binaryTree* node, int inorder[], int* index_ptr)
+{
+    // Base Case
+    if (node == NULL)
+        return;
+ 
+    /* first store the left subtree */
+    storeInorder(node->left, inorder, index_ptr);
+ 
+    /* Copy the root's value */
+    inorder[*index_ptr] = node->value;
+    (*index_ptr)++; // increase index for next entry
+ 
+    /* finally store the right subtree */
+    storeInorder(node->right, inorder, index_ptr);
+}
+ 
+/* A helper function to count nodes in a Binary Tree */
+int countNodes(binaryTree* root)
+{
+    if (root == NULL)
+        return 0;
+    return countNodes(root->left) + countNodes(root->right) + 1;
+}
+ 
+// Following function is needed for library function qsort()
+int compare(const void* a, const void* b)
+{
+    return (*(int*)a - *(int*)b);
+}
+
+void arrayToBST(int* arr, binaryTree* root, int* index_ptr)
+{
+    // Base Case
+    if (root == NULL)
+        return;
+ 
+    /* first update the left subtree */
+    arrayToBST(arr, root->left, index_ptr);
+ 
+    /* Now update root's value and increment index */
+    root->value = arr[*index_ptr];
+    (*index_ptr)++;
+ 
+    /* finally update the right subtree */
+    arrayToBST(arr, root->right, index_ptr);
+}
+ 
+// This function converts a given Binary Tree to BST
+void binaryTreeToBST(binaryTree* root)
+{
+    // base case: tree is empty
+    if (root == NULL)
+        return;
+ 
+    /* Count the number of nodes in Binary Tree so that
+    we know the size of temporary array to be created */
+    int n = countNodes(root);
+ 
+    // Create a temp array arr[] and store inorder traversal of tree in arr[]
+    int* arr = malloc(n * sizeof(*arr));
+    int i = 0;
+    storeInorder(root, arr, &i);
+ 
+    // Sort the array using library function for quick sort
+    qsort(arr, n, sizeof(arr[0]), compare);
+ 
+    // Copy array elements back to Binary Tree
+    i = 0;
+    arrayToBST(arr, root, &i);
+ 
+    // delete dynamically allocated memory to avoid memory leak
+    free(arr);
+    if(root){
+       inorder(root->left);
+        printf("%d ", root->value);
+        inorder(root->right);
+    }
 }
