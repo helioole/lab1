@@ -1,3 +1,8 @@
+#ifndef binarytree_h
+#define binarytree_h
+
+
+#endif /* binarytree_h */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -176,6 +181,7 @@ void serialize(binaryTree* node, char name[]){
             fprintf(file, " %d ", node->left->value);
         }
         node = node->left;
+    
     }
 
     fprintf(file, " NULL");
@@ -184,6 +190,7 @@ void serialize(binaryTree* node, char name[]){
 
 
 //read the binary tree from a file
+
 void deserialize(binaryTree** node, char name[]){
     FILE* file = fopen(name, "r");
 
@@ -193,7 +200,7 @@ void deserialize(binaryTree** node, char name[]){
     }
     
     int value = 0;
-    while(fscanf(file, " %d ", &value) > 0)
+    while(fscanf(file, " %d ->", &value) > 0)
     {
         insert(*node, value);
     }

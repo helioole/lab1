@@ -133,6 +133,9 @@ int main(){
             case '0': {
                 return 0;
             }
+
+            default:
+            break;
         }
     }
 
