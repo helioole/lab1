@@ -62,7 +62,7 @@ binaryTree* insert(binaryTree* node, int value){
             printf("Right: %d\n ", node->right->value);
             else printf("Right: Free\n ");
 
-            printf("\n Add to the \n1 - left, 2 - right\n"); 
+            printf("\n Move to the \n1 - left, 2 - right\n"); 
             scanf("%d", &k);
             
             switch(k){ 
@@ -80,7 +80,7 @@ binaryTree* delete_node(binaryTree* root, int value){
 
     //the second case
     //in the left witn no children
-    if(value < root -> value)
+    else if(value < root -> value)
         root->left = delete_node(root -> left, value);
 
     //in the right with no children
@@ -88,7 +88,7 @@ binaryTree* delete_node(binaryTree* root, int value){
         root->right = delete_node(root ->right, value);
     
     //the third case
-    else {
+    else{
         //node with no children or just one
         if (root->left == NULL){
             binaryTree* temp = root->right;
@@ -113,11 +113,11 @@ binaryTree* delete_node(binaryTree* root, int value){
 
 binaryTree* search(binaryTree* node, int value)
 {
-    if (node == NULL){
-        return node;
-    }
+    if (!(node))
+        return NULL;
+    return node;
 
-    else if (node->value == value){
+    if (node->value == value){
         return node;
     }
 
@@ -159,18 +159,30 @@ void postorder(binaryTree* node){
 void serialize(binaryTree* node, char name[]){
     FILE* file = fopen(name, "w");
 
-    if(file == NULL){
+     if(file == NULL){
         printf("Can't open the file\n");
         exit(1);
     }
     
+    /*
+    // Else, store current node and recur for its children
+    fprintf(file, "%d ", node->value);
+    serialize(node->left, name);
+    serialize(node->right, name);
+    */
+    
     while(node != NULL)
     {
-        fprintf(file, " %d ->", node->value);
+        fprintf(file, " %d ", node->value);
+        if (node->right != NULL){
+            fprintf(file, " %d ", node->right->value);
+        }
+        if (node->left != NULL){
+            fprintf(file, " %d ", node->left->value);
+        }
         node = node->left;
-        fprintf(file, " %d ->", node->value);
-        node = node->right;
     }
+
     fprintf(file, " NULL");
     fclose(file);
 }
@@ -186,7 +198,7 @@ void deserialize(binaryTree** node, char name[]){
     }
     
     int value = 0;
-    while(fscanf(file, " %d ->", &value) > 0)
+    while(fscanf(file, " %d ", &value) > 0)
     {
         insert(*node, value);
     }
@@ -268,9 +280,5 @@ void binaryTreeToBST(binaryTree* root)
     free(arr);
 
     //inorder traversal 
-    if(root){
-       inorder(root->left);
-       printf("%d ", root->value);
-       inorder(root->right);
-    }
+    inorder(root);
 }

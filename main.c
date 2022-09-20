@@ -50,7 +50,7 @@ int main(){
                     printf("There are no nodes yet\n");
                 }
                 else {
-                    delete_node(root, value);
+                    root = delete_node(root, value);
                     printf("You've deleted the node %d\n", value);
                     printf("\n");
                     }
@@ -65,7 +65,7 @@ int main(){
                     printf("Enter a node: ");
                     scanf("%d", &value);
                     printf("Is it in the tree? \n");
-                    if(search(root, value)){
+                    if(value == search(root, value) -> value){
                         printf("Yes\n");
                     }
                     else {printf("No\n");}
