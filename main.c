@@ -1,8 +1,3 @@
-#ifndef binarytree_h
-#define binarytree_h
-
-
-#endif /* binarytree_h */
 
 #include <stdio.h>
 #include <stdlib.h>
