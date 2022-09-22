@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "binarytree.h"
+#include "binaryTree.h"
 
 int main(){
     binaryTree* root = NULL;
@@ -109,7 +109,7 @@ int main(){
                     printf("There are no nodes yet\n");
                 }
                 else {
-                    printf("BST: ");
+                    printf("Inorder of BST: ");
                     binaryTreeToBST(root);
                     printf("\n");
                     }

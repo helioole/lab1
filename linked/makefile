@@ -1,7 +1,7 @@
 default: build run
 
 source_name = main.c
-executable_name = lab1
+executable_name = binaryTree
 
 build: 
 	@gcc $(source_name) -o $(executable_name)
@@ -9,3 +9,4 @@ build:
 
 run:
 	@./$(executable_name)
+

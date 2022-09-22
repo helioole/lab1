@@ -1,13 +1,6 @@
-#ifndef binarytree_h
-#define binarytree_h
-
-
-#endif /* binarytree_h */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#define FLAG -1
 
 typedef struct node
 {
@@ -80,15 +73,14 @@ binaryTree* delete_node(binaryTree* root, int value){
 
     //the second case
     //in the left witn no children
-    else if(value < root -> value)
+    if(value < root -> value)
         root->left = delete_node(root -> left, value);
 
     //in the right with no children
-    else if(value > root -> value)
+    if(value > root -> value)
         root->right = delete_node(root ->right, value);
     
     //the third case
-    else{
         //node with no children or just one
         if (root->left == NULL){
             binaryTree* temp = root->right;
@@ -107,7 +99,6 @@ binaryTree* delete_node(binaryTree* root, int value){
             root->value = temp-> value;   
             //delete the inorder      
             root->right = delete_node(root->right, temp->value);
-    }
     return root;
 }
 
