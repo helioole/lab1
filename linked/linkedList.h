@@ -178,25 +178,6 @@ void bubbleSort(struct node *start) {
     while (swapped); 
 } 
 
-void traverse(struct node** head_ref){
-    if (!(*head_ref) || !((*head_ref)->link))
-        return;
- 
-    struct node* new_head = NULL;
-    struct node *current = *head_ref, *link;
- 
-    while (current != NULL) {
-        link = current->link;
-        push(&new_head, current);
-
-        current = link;
-    }
- 
-    // update 'head_ref'
-    *head_ref = new_head;
-	return;
-}
-
 void push(struct node** head_ref, struct node* new_node){
     new_node->prev = NULL;
     new_node->link = (*head_ref);
@@ -208,8 +189,29 @@ void push(struct node** head_ref, struct node* new_node){
 	return;
 }
 
-void serialize(struct node* head, char name[]){   
-    FILE* file = fopen(name, "w");
+void traverse(struct node** head_ref){
+    struct node* new_head = NULL;
+    struct node *current = *head_ref, *link;
+
+    if (!(*head_ref) || !((*head_ref)->link))
+        return;
+ 
+    while (current != NULL) {
+        //poniter to the next node
+        link = current->link;
+        push(&new_head, current);
+
+        //update
+        current = link;
+    }
+    
+    *head_ref = new_head;
+	return;
+}
+
+
+void serialize(struct node* head){   
+    FILE* file = fopen("example.txt", "w");
 
     if(file == NULL)
         exit(1);
@@ -223,8 +225,9 @@ void serialize(struct node* head, char name[]){
     fclose(file);
 }
 
-void deserialize(struct node** head_ref, char name[]){  
-    FILE* file = fopen(name, "r");
+void deserialize(struct node** head_ref){ 
+
+    FILE* file = fopen("example.txt", "r");
 
     if(file == NULL)
         exit(2);
@@ -234,6 +237,6 @@ void deserialize(struct node** head_ref, char name[]){
     {
         append(head_ref, value);
     }
-    printList(head_ref);
+    
     fclose(file);
 }

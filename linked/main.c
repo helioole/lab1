@@ -1,15 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "linkedList.h"
-#define N 5
+
 
 int main(){
-struct node* data = NULL;
-struct node* array[N] = {NULL};
-char name[100];
+struct node* head = NULL;
+struct node* head2 = NULL;
 int index;
 int value;
-int opt = 0;
 char option;
 while(1){
     printf("\nChoose an option:");
@@ -18,7 +16,7 @@ while(1){
     printf("\n2 - Prepend");
     printf("\n3 - Reverse");
     printf("\n4 - Add a value to the specific index");
-    printf("\n5 - Remove a value to the specific index");
+    printf("\n5 - Remove a value at the specific index");
     printf("\n6 - Search");
     printf("\n7 - Sort");
     printf("\n8 - Backwards traversal");
@@ -33,29 +31,28 @@ while(1){
 
         case 'p':{
             printf("The obtained linked list: ");
-            printList(array[N]);
+            printList(head);
             break;
         }
-
 
         case '1':{
             printf("Enter a node: ");
             scanf("%d", &value);
-            append(&array[N], value);
+            append(&head, value);
             break;
         }
 
         case '2':{
             printf("Enter a node: ");
             scanf("%d", &value);
-            prepend(&array[N], value);
+            prepend(&head, value);
             break;
         }
 
         case '3':{
             printf("The reversed linked list: ");
-            reverse(&array[N], value);
-            printList(array[N]);
+            reverse(&head, value);
+            printList(head);
             break;
         }
 
@@ -64,51 +61,50 @@ while(1){
             scanf("%d", &index);
             printf("\nEnter the value: ");
             scanf("%d", &value);
-            add_at(&array[N], index, value);
-            printList(array[N]);
+            add_at(&head, index, value);
+            printList(head);
             break;
         }
 
         case '5':{
             printf("Enter the index: ");
             scanf("%d", &index);
-            remove_at(&array[N], index);
-            printList(array[N]);
+            remove_at(&head, index);
+            printList(head);
             break;
         }
 
         case '6':{
             printf("Enter a node: ");
             scanf("%d", &value);
-            search(array[N], value); 
+            search(head, value); 
             break;
             }
 
         case '7':{
-            bubbleSort(array[N]);
+            bubbleSort(head);
             printf("The sorted linked list: ");
-            printList(array[N]); 
+            printList(head); 
             break;
             }
 
         case '8':{
-            traverse(&array[N]);
-            printList(array[N]);
+            traverse(&head);
+            printList(head);
+            break;
         }
 
-        case 'w':
-            printf("\nEnter a file name: ");
-            scanf("%s", &name);
-            serialize(array[opt], name);
+        case 'w':{
+            serialize(head);
             break;
+        }
 
         case 'r':{
-            printf("\nEnter a file name: ");
-            scanf("%s", name);
-            deserialize(&array[opt], name);
+            deserialize(&head2);
+            printList(head2);
             break;
-        }
-        
+        }  
+
         case '0':{
             return 0;
         }
