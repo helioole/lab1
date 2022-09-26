@@ -46,6 +46,7 @@ void printList(struct node *node)
      node = node->link;
   }
   printf("NULL");
+  printf("\n");
 }
 
 
@@ -79,8 +80,9 @@ struct node* current = *head_ref;
 new_node -> data = new_data;
 new_node -> link = NULL;
 
-if(index >= list_length(*head_ref)){
+if(index > list_length(*head_ref)){
 	printf("Out of bounds\n");
+    return;
 }
 
 //the needed node is set at the beginning
@@ -89,7 +91,7 @@ if(index == 1){
 	return;
 }
 else{
-for(int i = 1 ; i < list_length(*head_ref) - 1; i++){
+for(int i = 1 ; i < index - 1; i++){
 	current = current -> link;
 }
 new_node -> link = current -> link;
@@ -113,8 +115,7 @@ struct node* next_node = NULL;
         return;
     }
 
-    while (index > list_length(*head) && current->link != NULL)
-    {
+    for(int i = 1 ; i < index; i++){
         prev = current;
         current = current->link;
         next_node = current -> link;
@@ -144,18 +145,12 @@ void search(struct node* head, int value){
 	else printf("\nThere is no given value\n");
 }
 
-void swap(struct node *node1, struct node *node2) 
-{ 
-    int temp = node1 -> data; 
-    node1->data = node2->data; 
-    node2 -> data = temp; 
-} 
-
-void bubbleSort(struct node *start) { 
+void sort(struct node *start) { 
     int swapped, i; 
     struct node *node1; 
     struct node *node2 = NULL; 
   
+    /* Checking for empty list */
     if (start == NULL) 
         return; 
   
@@ -164,11 +159,13 @@ void bubbleSort(struct node *start) {
         swapped = 0; 
         node1 = start; 
   
-        while (node1->link != node2) 
+        while (node1-> link != NULL) 
         { 
             if (node1->data > node1->link->data) 
-            { 
-                
+            {   
+                int temp = node1 -> data;
+                node1 -> data = node1 -> link -> data;
+                node1 -> link -> data = temp;
                 swapped = 1; 
             } 
             node1 = node1->link; 
@@ -176,7 +173,7 @@ void bubbleSort(struct node *start) {
         node2 = node1; 
     } 
     while (swapped); 
-} 
+}  
 
 void push(struct node** head_ref, struct node* new_node){
     new_node->prev = NULL;
@@ -225,18 +222,42 @@ void serialize(struct node* head){
     fclose(file);
 }
 
-void deserialize(struct node** head_ref){ 
-
+void deserialize(struct node *head){
     FILE* file = fopen("example.txt", "r");
+    struct node *node = NULL;
 
-    if(file == NULL)
+    if(file == NULL){
+        printf("Can't read the file\n");
         exit(2);
-
-    int value = 0;
-    while(fscanf(file, " %d ->", &value) > 0)
-    {
-        append(head_ref, value);
     }
     
+    int val = 0;
+    while((fscanf(file, " %d ->", &val)) > 0){
+        append(&node, val);
+    }
+
     fclose(file);
+    
+}
+
+struct node* join(struct node* list1, struct node* list2) {
+      struct node *joined = NULL;
+    
+    
+    if (list1 == NULL || list2 == NULL){
+        printf("Nothing to join.\n");
+        return 0;
+    }
+    
+    while (list1 != NULL){
+        append(&joined, list1->data);
+        list1 = list1->link;
+    }
+    
+    while (list2 != NULL){
+        append(&joined, list2->data);
+        list2 = list2->link;
+    }
+
+    return joined;
 }
